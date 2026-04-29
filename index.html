@@ -539,8 +539,82 @@ h2{font-family:'Bebas Neue';font-size:3rem;margin-bottom:30px;color:var(--hero)}
 .insight-content h3{animation:breathe 4.2s ease-in-out 2}
 .insight-content .data-point{animation:glowPulse 3.2s ease-in-out 2}
 
-/* DOT */
-.logo-dot,.login-dot{animation:dotDrift 3.2s ease-in-out 2 !important}
+
+/* ═══ HELLO SCREEN ═══ */
+#hello-screen{position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;background:var(--bg);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .6s,visibility .6s}
+#hello-screen.visible{opacity:1;visibility:visible;pointer-events:auto}
+#hello-screen.hiding{opacity:0;visibility:hidden}
+.hello-bg-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(0,195,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,195,255,.04) 1px,transparent 1px);background-size:50px 50px}
+.hello-halo{position:absolute;width:700px;height:700px;top:50%;left:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(0,195,255,.15) 0%,rgba(0,195,255,.04) 40%,transparent 70%);pointer-events:none;animation:hPulse 3s ease-in-out infinite}
+.hello-content{position:relative;z-index:10;text-align:center}
+.hello-label{font-family:'JetBrains Mono';font-size:.65rem;letter-spacing:.25em;color:var(--dim);text-transform:uppercase;display:block;margin-bottom:24px;animation:revealRight .8s .2s both}
+.hello-greeting{font-family:'Bebas Neue';font-size:3rem;color:var(--muted);letter-spacing:.1em;line-height:1;animation:entranceDown .7s .3s both}
+.hello-name{font-family:'Bebas Neue';font-size:5.5rem;color:var(--cyan);letter-spacing:-.02em;line-height:1;text-shadow:0 0 40px rgba(0,195,255,.4);animation:entranceHero .9s .4s both}
+.hello-bar{width:80px;height:3px;background:linear-gradient(90deg,var(--s1),var(--s2));border-radius:3px;margin:24px auto 20px;animation:revealRight 1s .8s both}
+.hello-sub{font-family:'JetBrains Mono';font-size:.75rem;color:var(--dim);letter-spacing:.15em;animation:revealRight .8s 1s both}
+
+/* ═══ MODAL ═══ */
+#modal-overlay{position:fixed;inset:0;z-index:2000;display:flex;align-items:center;justify-content:center;background:rgba(2,6,14,.85);backdrop-filter:blur(12px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s,visibility .35s}
+#modal-overlay.open{opacity:1;visibility:visible;pointer-events:auto}
+.modal-box{position:relative;width:480px;max-width:calc(100vw - 32px);max-height:90vh;overflow-y:auto;background:rgba(10,22,40,.95);border:1px solid rgba(0,195,255,.15);border-radius:24px;padding:44px 40px;box-shadow:0 40px 100px rgba(0,0,0,.7)}
+.modal-box::-webkit-scrollbar{width:3px}.modal-box::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:3px}
+.modal-close{position:absolute;top:18px;right:18px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);color:var(--muted);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s}
+.modal-close:hover{background:rgba(255,255,255,.12);color:var(--hero)}
+.modal-logo{text-align:center;margin-bottom:30px;color:var(--hero)}
+.modal-field{margin-bottom:20px}
+.modal-label{font-family:'JetBrains Mono';font-size:.62rem;letter-spacing:.14em;color:var(--dim);text-transform:uppercase;display:block;margin-bottom:8px}
+.modal-input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:14px 16px;color:var(--hero);font-family:'DM Sans';font-size:.92rem;outline:none;transition:border-color .3s,box-shadow .3s}
+.modal-input:focus{border-color:var(--cyan);box-shadow:0 0 16px rgba(0,195,255,.12)}
+.modal-input::placeholder{color:var(--dim)}
+.modal-input[readonly]{opacity:.65;cursor:default}
+/* WhatsApp con indicativo */
+.wa-input-group{display:flex;gap:8px;align-items:stretch}
+.wa-country-select{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:0 12px;color:var(--hero);font-family:'DM Sans';font-size:.88rem;outline:none;cursor:pointer;transition:border-color .3s;flex-shrink:0;appearance:none;-webkit-appearance:none;min-width:92px;text-align:center}
+.wa-country-select:focus{border-color:var(--cyan);box-shadow:0 0 16px rgba(0,195,255,.12)}
+.wa-country-select option{background:#0A1628;color:var(--hero)}
+.wa-number-input{flex:1;margin-bottom:0}
+.modal-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.modal-option{cursor:pointer}
+.modal-option input[type=radio]{display:none}
+.modal-option-box{display:flex;flex-direction:column;gap:4px;padding:14px 16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);border-radius:12px;transition:border-color .25s,background .25s}
+.modal-option input:checked + .modal-option-box{border-color:var(--cyan);background:rgba(0,195,255,.06)}
+.modal-option-title{font-size:.82rem;font-weight:600;color:var(--hero)}
+.modal-option-date{font-family:'JetBrains Mono';font-size:.58rem;color:var(--dim);letter-spacing:.06em}
+.modal-submit{width:100%;margin-top:8px;padding:16px;background:linear-gradient(135deg,var(--accent),#1E40AF);border:none;border-radius:12px;color:#fff;font-family:'Bebas Neue';font-size:1.25rem;letter-spacing:.08em;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.modal-submit:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(59,125,216,.4)}
+.modal-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
+#modal-status{text-align:center;margin-top:16px;min-height:22px;font-family:'JetBrains Mono';font-size:.68rem;color:var(--cyan);transition:opacity .3s}
+
+/* ═══ MOBILE RESPONSIVE ═══ */
+@media (max-width: 768px){
+  body{overflow:auto}
+  .pitch-wrap{min-height:100vh;padding:0;align-items:flex-start}
+  .pitch-container{width:100%;height:auto;min-height:100vh;grid-template-columns:1fr;border-radius:0;border:none;display:flex;flex-direction:column}
+  .insight-panel{display:none}
+  .platform-wrap{flex:1;min-height:100vh}
+  .stage{transition:transform .6s cubic-bezier(.85,0,.15,1)}
+  .view{height:auto;min-height:calc(100vh - 83px);padding:28px 20px;box-sizing:border-box}
+  h1{font-size:3.2rem}
+  h2{font-size:2rem;margin-bottom:18px}
+  .nav{height:60px;padding:0 16px}
+  .logo-sub{display:none}
+  .session-grid{grid-template-columns:1fr}
+  .val-grid-full{grid-template-columns:1fr}
+  .tool-grid{grid-template-columns:repeat(2,1fr)}
+  .view-1-badges{gap:6px}
+  .view-1-badges span{font-size:.55rem;padding:5px 10px}
+  .view-5-stats{flex-direction:column;gap:14px}
+  .view-5-cta{flex-direction:column;align-items:stretch}
+  .view-5-cta a{text-align:center;justify-content:center}
+  #view-5{padding:28px 20px}
+  #view-5 > div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;gap:20px}
+  .inst-exp-items{gap:8px}
+  .login-box{width:calc(100vw - 32px);padding:36px 24px}
+  .modal-box{padding:32px 20px}
+  .modal-options{grid-template-columns:1fr}
+  .hello-name{font-size:3.5rem}
+  .hello-greeting{font-size:2.2rem}
+}
 </style>
 </head>
 <body>
@@ -562,14 +636,100 @@ h2{font-family:'Bebas Neue';font-size:3rem;margin-bottom:30px;color:var(--hero)}
                 <span class="login-dot logo-dot"></span>
             </div>
         </div>
-        <label class="login-label">ID de Iniciativa o Credencial Estratégica</label>
-        <input type="text" class="login-input" id="login-id" placeholder="Ingrese su credencial de acceso" autocomplete="off">
+        <label class="login-label">Nombre completo</label>
+        <input type="text" class="login-input" id="login-name" placeholder="Su nombre completo" autocomplete="off">
+        <label class="login-label">Correo electrónico</label>
+        <input type="email" class="login-input" id="login-email" placeholder="su@correo.com" autocomplete="off">
         <button id="login-btn">
             <span class="scan-line" id="scan-line"></span>
             VERIFICAR ACCESO
         </button>
         <div id="login-status"></div>
         <div class="login-footer">GOBIERNO DE IA · ACCESO RESTRINGIDO · 2026</div>
+    </div>
+</div>
+
+<!-- ═══════════ PANTALLA HOLA ═══════════ -->
+<div id="hello-screen">
+    <div class="hello-bg-grid"></div>
+    <div class="hello-halo"></div>
+    <div class="hello-content">
+        <span class="hello-label">ACCESO CONCEDIDO · VECTIVA CONSULTING</span>
+        <div class="hello-greeting">HOLA,</div>
+        <div class="hello-name" id="hello-name-display">DIRECTIVO</div>
+        <div class="hello-bar"></div>
+        <p class="hello-sub">Bienvenido a la plataforma de Gobierno de IA</p>
+    </div>
+</div>
+
+<!-- ═══════════ MODAL INSCRIPCIÓN ═══════════ -->
+<div id="modal-overlay">
+    <div class="modal-box">
+        <button class="modal-close" id="modal-close">✕</button>
+        <div class="modal-logo">
+            <span style="font-family:'DM Sans';font-weight:800;font-size:.9rem;letter-spacing:.18em;text-transform:uppercase">VECTIVA</span>
+            <span style="font-size:.55rem;letter-spacing:.3em;display:block;margin-top:2px;text-transform:uppercase;opacity:.6">INSCRIPCIÓN AL PROGRAMA</span>
+        </div>
+        <div class="modal-field">
+            <label class="modal-label">Nombre completo</label>
+            <input type="text" class="modal-input" id="reg-name" placeholder="Su nombre completo">
+        </div>
+        <div class="modal-field">
+            <label class="modal-label">Correo electrónico</label>
+            <input type="email" class="modal-input" id="reg-email" placeholder="su@correo.com">
+        </div>
+        <div class="modal-field">
+            <label class="modal-label">WhatsApp</label>
+            <div class="wa-input-group">
+                <select class="wa-country-select" id="reg-country">
+                    <option value="+57">🇨🇴 +57</option>
+                    <option value="+1">🇺🇸 +1</option>
+                    <option value="+52">🇲🇽 +52</option>
+                    <option value="+54">🇦🇷 +54</option>
+                    <option value="+56">🇨🇱 +56</option>
+                    <option value="+51">🇵🇪 +51</option>
+                    <option value="+58">🇻🇪 +58</option>
+                    <option value="+593">🇪🇨 +593</option>
+                    <option value="+591">🇧🇴 +591</option>
+                    <option value="+595">🇵🇾 +595</option>
+                    <option value="+598">🇺🇾 +598</option>
+                    <option value="+507">🇵🇦 +507</option>
+                    <option value="+506">🇨🇷 +506</option>
+                    <option value="+502">🇬🇹 +502</option>
+                    <option value="+503">🇸🇻 +503</option>
+                    <option value="+504">🇭🇳 +504</option>
+                    <option value="+505">🇳🇮 +505</option>
+                    <option value="+34">🇪🇸 +34</option>
+                    <option value="+55">🇧🇷 +55</option>
+                    <option value="+44">🇬🇧 +44</option>
+                    <option value="+33">🇫🇷 +33</option>
+                    <option value="+49">🇩🇪 +49</option>
+                    <option value="+39">🇮🇹 +39</option>
+                </select>
+                <input type="tel" class="modal-input wa-number-input" id="reg-whatsapp" placeholder="300 000 0000">
+            </div>
+        </div>
+        <div class="modal-field">
+            <label class="modal-label">Modalidad</label>
+            <div class="modal-options">
+                <label class="modal-option">
+                    <input type="radio" name="modalidad" value="Presencial (A partir del 19 de mayo)">
+                    <span class="modal-option-box">
+                        <span class="modal-option-title">🏛 Presencial</span>
+                        <span class="modal-option-date">A partir del 19 de mayo</span>
+                    </span>
+                </label>
+                <label class="modal-option">
+                    <input type="radio" name="modalidad" value="Virtual (A partir del 12 de mayo)">
+                    <span class="modal-option-box">
+                        <span class="modal-option-title">💻 Virtual</span>
+                        <span class="modal-option-date">A partir del 12 de mayo</span>
+                    </span>
+                </label>
+            </div>
+        </div>
+        <button class="modal-submit" id="modal-submit">CONFIRMAR INSCRIPCIÓN →</button>
+        <div id="modal-status"></div>
     </div>
 </div>
 
@@ -608,13 +768,13 @@ h2{font-family:'Bebas Neue';font-size:3rem;margin-bottom:30px;color:var(--hero)}
             </div>
             <div class="insight-content" id="insight-7">
                 <h3>Su Próximo Paso</h3>
-                <p>Coordine la implementación directamente con el equipo de Vectiva. Un <strong>programa adaptado</strong> a su industria, su equipo y sus objetivos estratégicos listo para activarse.</p>
+                <p>Inscríbase directamente al programa de Vectiva. Un <strong>programa adaptado</strong> a su industria, su equipo y sus objetivos estratégicos listo para activarse.</p>
             </div>
 
 
 
             <div class="cta-box">
-                <a href="mailto:df.h.forero@gmail.com" class="cta-btn">COORDINAR IMPLEMENTACIÓN</a>
+                <a href="#" class="cta-btn" id="sidebar-inscribete-btn">INSCRÍBETE</a>
                 <a href="https://wa.me/573229452329" target="_blank" class="cta-wa">📱 +57 322 945 2329 · WhatsApp</a>
                 <p style="font-size:.58rem;color:rgba(255,255,255,.5);margin-top:10px;font-family:&#39;JetBrains Mono&#39;">VECTIVA CONSULTING · GOBIERNO DE IA · 2026</p>
             </div>
@@ -664,16 +824,16 @@ h2{font-family:'Bebas Neue';font-size:3rem;margin-bottom:30px;color:var(--hero)}
                     </div>
                 </div>
 
-                <!-- VIEW 2: 4 SESIONES — GRID REDISEÑADO -->
-                <div class="view" id="view-1">
-                    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:22px">
+                <!-- VIEW 2: 4 SESIONES — GRID 2×2 -->
+                <div class="view" id="view-1" style="padding:36px 60px 28px">
+                    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px">
                         <h2 class="view-2-h2" style="margin-bottom:0">Ciclo de Valor · 4 Sesiones</h2>
                         <span style="font-family:'JetBrains Mono';font-size:.6rem;color:var(--dim);letter-spacing:.12em">EN VIVO · ADAPTADO A SU EQUIPO</span>
                     </div>
-                    <div class="session-grid">
-                        <div class="s-card s-card-anim" style="--sc:var(--s1)">
+                    <div class="session-grid" style="grid-template-columns:1fr 1fr;gap:12px">
+                        <div class="s-card s-card-anim" style="--sc:var(--s1);padding:16px 18px">
                             <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
-                                <div class="s-num" style="color:var(--s1)">01</div>
+                                <div class="s-num" style="color:var(--s1);font-size:1.5rem">01</div>
                                 <span class="s-tag" style="color:var(--s1);background:rgba(59,125,216,.08)">ENTORNO</span>
                             </div>
                             <div class="s-info">
@@ -685,9 +845,9 @@ h2{font-family:'Bebas Neue';font-size:3rem;margin-bottom:30px;color:var(--hero)}
                                 <span class="s-badge" style="border-color:rgba(59,125,216,.25);color:var(--s1)">⬡ Laboratorio</span>
                             </div>
                         </div>
-                        <div class="s-card s-card-anim" style="--sc:var(--s2)">
+                        <div class="s-card s-card-anim" style="--sc:var(--s2);padding:16px 18px">
                             <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
-                                <div class="s-num" style="color:var(--s2)">02</div>
+                                <div class="s-num" style="color:var(--s2);font-size:1.5rem">02</div>
                                 <span class="s-tag" style="color:var(--s2);background:rgba(6,182,212,.08)">OPERACIÓN</span>
                             </div>
                             <div class="s-info">
@@ -699,9 +859,9 @@ h2{font-family:'Bebas Neue';font-size:3rem;margin-bottom:30px;color:var(--hero)}
                                 <span class="s-badge" style="border-color:rgba(6,182,212,.25);color:var(--s2)">⬡ Laboratorio</span>
                             </div>
                         </div>
-                        <div class="s-card s-card-anim" style="--sc:var(--s3)">
+                        <div class="s-card s-card-anim" style="--sc:var(--s3);padding:16px 18px">
                             <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
-                                <div class="s-num" style="color:var(--s3)">03</div>
+                                <div class="s-num" style="color:var(--s3);font-size:1.5rem">03</div>
                                 <span class="s-tag" style="color:var(--s3);background:rgba(245,158,11,.08)">AUDITORÍA</span>
                             </div>
                             <div class="s-info">
@@ -713,9 +873,9 @@ h2{font-family:'Bebas Neue';font-size:3rem;margin-bottom:30px;color:var(--hero)}
                                 <span class="s-badge" style="border-color:rgba(245,158,11,.25);color:var(--s3)">⬡ Laboratorio</span>
                             </div>
                         </div>
-                        <div class="s-card s-card-anim" style="--sc:var(--s4)">
+                        <div class="s-card s-card-anim" style="--sc:var(--s4);padding:16px 18px">
                             <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
-                                <div class="s-num" style="color:var(--s4)">04</div>
+                                <div class="s-num" style="color:var(--s4);font-size:1.5rem">04</div>
                                 <span class="s-tag" style="color:var(--s4);background:rgba(139,92,246,.08)">ROADMAP</span>
                             </div>
                             <div class="s-info">
@@ -860,7 +1020,8 @@ h2{font-family:'Bebas Neue';font-size:3rem;margin-bottom:30px;color:var(--hero)}
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:28px;align-items:start">
                         <div>
                             <h1 class="view-inst-name" style="font-size:2.8rem;line-height:1.05;margin-bottom:6px">DANIEL<br>HERNÁNDEZ</h1>
-                            <div style="font-family:'JetBrains Mono';font-size:.72rem;color:var(--cyan);letter-spacing:.1em;margin-bottom:24px">SENIOR PARTNER · VECTIVA CONSULTING</div>
+                            <div style="font-family:'JetBrains Mono';font-size:.72rem;color:var(--cyan);letter-spacing:.1em;margin-bottom:16px">SENIOR PARTNER · VECTIVA CONSULTING</div>
+                            <a href="https://www.linkedin.com/in/daniel-felipe-hern%C3%A1ndez-forero/" target="_blank" style="display:inline-flex;align-items:center;gap:7px;font-family:'JetBrains Mono';font-size:.62rem;color:var(--muted);text-decoration:none;border:1px solid rgba(255,255,255,.1);padding:6px 14px;border-radius:20px;margin-bottom:20px;transition:border-color .2s,color .2s" onmouseover="this.style.borderColor='var(--cyan)';this.style.color='var(--hero)'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)';this.style.color='var(--muted)'"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg> LinkedIn · Daniel Hernández</a>
                             <div class="inst-edu-block">
                                 <div class="inst-edu-label">FORMACIÓN</div>
                                 <div class="inst-edu-item">Economista · Universidad de los Andes</div>
@@ -903,7 +1064,7 @@ h2{font-family:'Bebas Neue';font-size:3rem;margin-bottom:30px;color:var(--hero)}
                     <p class="view-5-sub" style="font-size:.8rem;color:var(--muted);letter-spacing:.12em;margin-top:12px;font-family:'JetBrains Mono';text-transform:uppercase">Explora, Experimenta y Lidera</p>
                     <p class="view-5-body" style="font-size:1.05rem;color:var(--muted);max-width:520px;margin-top:24px;line-height:1.7">Un programa diseñado exclusivamente para su equipo directivo personalizado, progresivo y con resultados reales desde la primera sesión. Incluye acceso a nuestra plataforma propia.</p>
                     <div class="view-5-cta" style="display:flex;gap:16px;margin-top:36px;align-items:center;flex-wrap:wrap">
-                        <a href="mailto:df.h.forero@gmail.com" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--accent),#1E40AF);color:#fff;font-family:'Bebas Neue';font-size:1.3rem;letter-spacing:.08em;padding:18px 32px;border-radius:100px;text-decoration:none;box-shadow:0 8px 24px rgba(59,125,216,.35);transition:transform .2s,box-shadow .2s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 14px 36px rgba(59,125,216,.5)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 8px 24px rgba(59,125,216,.35)'">COORDINAR IMPLEMENTACIÓN →</a>
+                        <a href="#" id="main-inscribete-btn" style="display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,var(--accent),#1E40AF);color:#fff;font-family:'Bebas Neue';font-size:1.3rem;letter-spacing:.08em;padding:18px 32px;border-radius:100px;text-decoration:none;box-shadow:0 8px 24px rgba(59,125,216,.35);transition:transform .2s,box-shadow .2s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 14px 36px rgba(59,125,216,.5)'" onmouseout="this.style.transform='none';this.style.boxShadow='0 8px 24px rgba(59,125,216,.35)'">INSCRÍBETE →</a>
                         <a href="https://wa.me/573229452329" target="_blank" style="display:inline-flex;align-items:center;gap:8px;color:var(--muted);font-family:'JetBrains Mono';font-size:.7rem;text-decoration:none;border:1px solid rgba(255,255,255,.1);padding:14px 22px;border-radius:100px;transition:border-color .2s,color .2s" onmouseover="this.style.borderColor='var(--cyan)';this.style.color='var(--hero)'" onmouseout="this.style.borderColor='rgba(255,255,255,.1)';this.style.color='var(--muted)'">📱 +57 322 945 2329 · WhatsApp</a>
                     </div>
                     <div class="view-5-stats" style="margin-top:32px;display:flex;gap:24px">
@@ -925,61 +1086,182 @@ h2{font-family:'Bebas Neue';font-size:3rem;margin-bottom:30px;color:var(--hero)}
 </main></div>
 
 <script>
+// ══════════════════════════════════════════════════
+// CONFIGURACIÓN — REEMPLAZA ESTAS URLs CON TUS
+// WEB APP URLs DE GOOGLE APPS SCRIPT
+// ══════════════════════════════════════════════════
+const APPS_SCRIPT_LOGIN_URL   = 'https://script.google.com/macros/s/AKfycbysiyYckfSOIUmsiukRMwvg5JDuGl6fuhAJmjpEj-6vYcmKXX8T_5D_DCkILWfzmSPHfw/exec';
+const APPS_SCRIPT_INSCRIPCION_URL = 'https://script.google.com/macros/s/AKfycbysiyYckfSOIUmsiukRMwvg5JDuGl6fuhAJmjpEj-6vYcmKXX8T_5D_DCkILWfzmSPHfw/exec';
+// ══════════════════════════════════════════════════
+
+// ── ESTADO GLOBAL DE USUARIO ──
+let globalUserName  = '';
+let globalUserEmail = '';
+
 // ── LOGIN ──
-const loginBtn = document.getElementById('login-btn');
-const loginScreen = document.getElementById('login-screen');
-const loginBox = document.querySelector('.login-box');
-const loginGrid = document.querySelector('.login-grid');
-const pitchWrap = document.getElementById('pitch-wrap');
-const scanLine = document.getElementById('scan-line');
-const loginStatus = document.getElementById('login-status');
-const loginInput = document.getElementById('login-id');
+const loginBtn     = document.getElementById('login-btn');
+const loginScreen  = document.getElementById('login-screen');
+const loginBox     = document.querySelector('.login-box');
+const loginGrid    = document.querySelector('.login-grid');
+const pitchWrap    = document.getElementById('pitch-wrap');
+const scanLine     = document.getElementById('scan-line');
+const loginStatus  = document.getElementById('login-status');
+const loginNameInput  = document.getElementById('login-name');
+const loginEmailInput = document.getElementById('login-email');
 const revealOverlay = document.getElementById('reveal-overlay');
-const navEl = document.querySelector('.nav-enter');
-const sidebarEl = document.querySelector('.sidebar-enter');
+const navEl    = document.querySelector('.nav-enter');
+const sidebarEl= document.querySelector('.sidebar-enter');
+
+const helloScreen      = document.getElementById('hello-screen');
+const helloNameDisplay = document.getElementById('hello-name-display');
+
+function sendToSheet(url, data) {
+    // Envío silencioso — no bloquea el flujo del usuario
+    fetch(url, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    }).catch(() => {});
+}
 
 function triggerLogin() {
+    const name  = loginNameInput.value.trim();
+    const email = loginEmailInput.value.trim();
+
+    if (!name || !email) {
+        loginStatus.textContent = '⚠ Por favor ingrese nombre y correo.';
+        loginStatus.style.color = '#f87171';
+        loginStatus.classList.add('show');
+        return;
+    }
+
+    globalUserName  = name;
+    globalUserEmail = email;
+
     scanLine.classList.add('active');
     loginBtn.style.pointerEvents = 'none';
-    const name = loginInput.value.trim() || 'Directivo Ejecutivo';
 
     // Phase 1: scanning
     setTimeout(() => {
         loginStatus.textContent = '⟐ Verificando credenciales...';
+        loginStatus.style.color = 'var(--cyan)';
         loginStatus.classList.add('show');
     }, 400);
 
-    // Phase 2: verified — box glows green
+    // Phase 2: verified
     setTimeout(() => {
         loginStatus.textContent = '⟐ ACCESO CONCEDIDO · Bienvenido, ' + name;
         loginStatus.style.color = '#4ade80';
         loginBox.classList.add('verified');
+
+        // Enviar datos de acceso al Google Sheet
+        sendToSheet(APPS_SCRIPT_LOGIN_URL, {
+            nombre: name,
+            correo: email,
+            timestamp: new Date().toISOString()
+        });
     }, 1600);
 
-    // Phase 3: box collapses, grid accelerates
+    // Phase 3: box collapses
     setTimeout(() => {
         loginBox.classList.add('collapsing');
         loginGrid.classList.add('accelerating');
     }, 2400);
 
-    // Phase 4: platform reveal sweep
+    // Phase 4: login se va, aparece HOLA
     setTimeout(() => {
         loginScreen.classList.add('exiting');
+        helloNameDisplay.textContent = name.split(' ')[0].toUpperCase();
+        helloScreen.classList.add('visible');
+    }, 2750);
+
+    // Phase 5: después de 2.5s de HOLA, transición al GIF
+    setTimeout(() => {
+        helloScreen.classList.add('hiding');
         revealOverlay.classList.add('sweeping');
         pitchWrap.classList.add('active');
         document.body.style.overflow = 'hidden';
-    }, 2750);
+    }, 5300);
 
-    // Phase 5: platform elements enter
+    // Phase 6: plataforma entra
     setTimeout(() => {
         initSlides();
         navEl.classList.add('in');
         sidebarEl.classList.add('in');
-    }, 3200);
+    }, 5750);
 }
 
 loginBtn.addEventListener('click', triggerLogin);
-loginInput.addEventListener('keydown', e => { if (e.key === 'Enter') triggerLogin(); });
+loginNameInput.addEventListener('keydown', e  => { if (e.key === 'Enter') loginEmailInput.focus(); });
+loginEmailInput.addEventListener('keydown', e => { if (e.key === 'Enter') triggerLogin(); });
+
+// ── MODAL INSCRIPCIÓN ──
+const modalOverlay = document.getElementById('modal-overlay');
+const modalClose   = document.getElementById('modal-close');
+const modalSubmit  = document.getElementById('modal-submit');
+const modalStatus  = document.getElementById('modal-status');
+const regName      = document.getElementById('reg-name');
+const regEmail     = document.getElementById('reg-email');
+const regWhatsapp  = document.getElementById('reg-whatsapp');
+
+function openModal() {
+    // Pre-llenar nombre y correo desde las credenciales de acceso
+    regName.value  = globalUserName;
+    regEmail.value = globalUserEmail;
+    // Marcar como readonly si ya están llenos
+    regName.readOnly  = !!globalUserName;
+    regEmail.readOnly = !!globalUserEmail;
+    // Reset estado
+    modalStatus.textContent = '';
+    modalSubmit.disabled = false;
+    modalSubmit.textContent = 'CONFIRMAR INSCRIPCIÓN →';
+    // Limpiar campos variables
+    regWhatsapp.value = '';
+    document.querySelectorAll('input[name="modalidad"]').forEach(r => r.checked = false);
+    modalOverlay.classList.add('open');
+}
+
+function closeModal() {
+    modalOverlay.classList.remove('open');
+}
+
+document.getElementById('sidebar-inscribete-btn').addEventListener('click', e => { e.preventDefault(); openModal(); });
+document.getElementById('main-inscribete-btn').addEventListener('click', e => { e.preventDefault(); openModal(); });
+modalClose.addEventListener('click', closeModal);
+modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
+
+modalSubmit.addEventListener('click', () => {
+    const nombre    = regName.value.trim();
+    const correo    = regEmail.value.trim();
+    const countryCode = document.getElementById('reg-country').value;
+    const whatsapp  = countryCode + ' ' + regWhatsapp.value.trim();
+    const modalidad = (document.querySelector('input[name="modalidad"]:checked') || {}).value || '';
+
+    if (!nombre || !correo || !whatsapp || !modalidad) {
+        modalStatus.textContent = '⚠ Por favor complete todos los campos.';
+        modalStatus.style.color = '#f87171';
+        return;
+    }
+
+    modalSubmit.disabled = true;
+    modalSubmit.textContent = 'ENVIANDO...';
+    modalStatus.textContent = '⟐ Registrando inscripción...';
+    modalStatus.style.color = 'var(--cyan)';
+
+    sendToSheet(APPS_SCRIPT_INSCRIPCION_URL, {
+        nombre, correo, whatsapp, modalidad,
+        timestamp: new Date().toISOString()
+    });
+
+    // Respuesta optimista — el envío es no-cors, confirmamos de inmediato
+    setTimeout(() => {
+        modalSubmit.textContent = '✓ INSCRIPCIÓN ENVIADA';
+        modalStatus.textContent = '¡Listo! Nos pondremos en contacto pronto.';
+        modalStatus.style.color = '#4ade80';
+        setTimeout(closeModal, 2800);
+    }, 1200);
+});
 
 // ── SLIDE SYSTEM ──
 const SLIDE_COUNT = 7;
