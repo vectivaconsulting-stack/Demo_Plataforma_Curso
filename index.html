@@ -591,24 +591,69 @@ h2{font-family:'Bebas Neue';font-size:3rem;margin-bottom:30px;color:var(--hero)}
   .pitch-wrap{min-height:100vh;padding:0;align-items:flex-start}
   .pitch-container{width:100%;height:auto;min-height:100vh;grid-template-columns:1fr;border-radius:0;border:none;display:flex;flex-direction:column}
   .insight-panel{display:none}
-  .platform-wrap{flex:1;min-height:100vh}
+  .platform-wrap{flex:1;min-height:100vh;overflow:hidden}
   .stage{transition:transform .6s cubic-bezier(.85,0,.15,1)}
-  .view{height:auto;min-height:calc(100vh - 83px);padding:28px 20px;box-sizing:border-box}
-  h1{font-size:3.2rem}
-  h2{font-size:2rem;margin-bottom:18px}
-  .nav{height:60px;padding:0 16px}
+
+  /* ── Uniform fixed-height views so translateY snap works correctly ── */
+  .view{height:calc(100vh - 63px);min-height:unset;padding:20px 16px !important;box-sizing:border-box;overflow-y:auto;overflow-x:hidden}
+
+  h1{font-size:3rem}
+  h2{font-size:1.8rem;margin-bottom:14px}
+  .nav{height:60px;padding:0 14px}
   .logo-sub{display:none}
-  .session-grid{grid-template-columns:1fr}
+
+  /* ── Hide GIF badge text so nav doesn't overflow on narrow screens ── */
+  .nav > div > div:first-child{display:none}
+
+  /* ── Session grid inline-style override ── */
+  .session-grid{grid-template-columns:1fr!important}
+
   .val-grid-full{grid-template-columns:1fr}
   .tool-grid{grid-template-columns:repeat(2,1fr)}
   .view-1-badges{gap:6px}
   .view-1-badges span{font-size:.55rem;padding:5px 10px}
-  .view-5-stats{flex-direction:column;gap:14px}
+  .view-5-stats{flex-direction:column;gap:12px}
   .view-5-cta{flex-direction:column;align-items:stretch}
   .view-5-cta a{text-align:center;justify-content:center}
-  #view-5{padding:28px 20px}
-  #view-5 > div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;gap:20px}
+
+  /* ── Instructor view ── */
+  #view-5{padding:20px 16px !important}
+  #view-5 > div[style*="grid-template-columns"]{grid-template-columns:1fr!important;gap:16px!important;margin-top:16px!important}
   .inst-exp-items{gap:8px}
+  .view-inst-name{font-size:2.2rem!important}
+
+  /* ── Hide right-side subtitle labels in view headers to prevent overflow ── */
+  #view-1 > div:first-child > span,
+  #view-3 > div:first-child > span,
+  #view-4 > div:first-child > span{display:none}
+
+  /* ── View header rows: stack on mobile ── */
+  #view-1 > div:first-child,
+  #view-3 > div:first-child,
+  #view-4 > div:first-child{flex-direction:column;gap:2px;align-items:flex-start}
+
+  /* ── Validation cards: reduce padding ── */
+  .val-card-full{padding:14px}
+  .val-quote-full{padding:14px 16px;font-size:.76rem}
+
+  /* ── Tracker ── */
+  .executive-tracker{padding:22px 18px}
+  .tracker-row{gap:14px;margin-bottom:16px}
+
+  /* ── Tool cards ── */
+  .tool-card-v{padding:10px 12px}
+  .signal-strip{font-size:.62rem;padding:7px 10px}
+
+  /* ── CTA view ── */
+  #view-6 h1{font-size:2.8rem!important}
+  #view-6 .view-5-cta a:first-child{font-size:1.1rem;padding:14px 24px}
+  #view-6 .view-5-cta a:last-child{font-size:.62rem;padding:12px 18px}
+
+  /* ── Session cards ── */
+  .s-card{padding:14px 16px!important}
+  .s-info p{font-size:.68rem}
+
+  /* ── Login & modal ── */
   .login-box{width:calc(100vw - 32px);padding:36px 24px}
   .modal-box{padding:32px 20px}
   .modal-options{grid-template-columns:1fr}
@@ -1181,7 +1226,7 @@ function triggerLogin() {
         helloScreen.classList.add('hiding');
         revealOverlay.classList.add('sweeping');
         pitchWrap.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        if (window.innerWidth > 768) document.body.style.overflow = 'hidden';
     }, 5300);
 
     // Phase 6: plataforma entra
@@ -1265,8 +1310,17 @@ modalSubmit.addEventListener('click', () => {
 
 // ── SLIDE SYSTEM ──
 const SLIDE_COUNT = 7;
-const SLIDE_H = 717;
+const SLIDE_H = 717; // desktop fixed height (px)
 const SLIDE_DURATION = 20000;
+
+// Returns the correct slide height for the current device
+function getSlideH() {
+    if (window.innerWidth <= 768) {
+        // nav=60px + gif-progress bar=3px = 63px of chrome on mobile
+        return window.innerHeight - 63;
+    }
+    return SLIDE_H;
+}
 
 let current = 0;
 let elapsed = 0;
@@ -1287,7 +1341,7 @@ function showSlide(n) {
     elapsed = 0;
 
     // Move stage
-    stage.style.transform = `translateY(${-current * SLIDE_H}px)`;
+    stage.style.transform = `translateY(${-current * getSlideH()}px)`;
 
     // Swap sidebar insight
     allInsights.forEach((el, i) => {
@@ -1338,6 +1392,27 @@ playBtn.addEventListener('click', () => {
 
 prevBtn.addEventListener('click', () => { showSlide(current - 1); });
 nextBtn.addEventListener('click', () => { showSlide(current + 1); });
+
+// ── TOUCH SWIPE (mobile) ──
+let _touchX = 0, _touchY = 0;
+stage.addEventListener('touchstart', e => {
+    _touchX = e.touches[0].clientX;
+    _touchY = e.touches[0].clientY;
+}, { passive: true });
+stage.addEventListener('touchend', e => {
+    const dx = _touchX - e.changedTouches[0].clientX;
+    const dy = _touchY - e.changedTouches[0].clientY;
+    // Only register as a vertical swipe if clearly more vertical than horizontal
+    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 44) {
+        if (dy > 0) showSlide(current + 1); // swipe up → next
+        else        showSlide(current - 1); // swipe down → prev
+    }
+}, { passive: true });
+
+// ── RESIZE: recalculate position in case viewport changes (orientation flip, browser chrome) ──
+window.addEventListener('resize', () => {
+    stage.style.transform = `translateY(${-current * getSlideH()}px)`;
+});
 
 // ── SESSION PANEL INTERACTIVITY ──
 function selectSess(idx) {
