@@ -585,170 +585,114 @@ h2{font-family:'Bebas Neue';font-size:3rem;margin-bottom:30px;color:var(--hero)}
 .modal-submit:disabled{opacity:.5;cursor:not-allowed;transform:none}
 #modal-status{text-align:center;margin-top:16px;min-height:22px;font-family:'JetBrains Mono';font-size:.68rem;color:var(--cyan);transition:opacity .3s}
 
-/* ═══ MOBILE — ACORDEÓN VERTICAL ═══════════════════════════════════════
-   En móvil se reemplaza completamente el mecanismo de slides/GIF por un
-   acordeón vertical de scroll natural. Sin translateY, sin fade, sin timer.
-   Cada sección es un ítem colapsable con header tappeable.
-═══════════════════════════════════════════════════════════════════════ */
+/* ═══ MOBILE RESPONSIVE ═══ */
 @media (max-width: 768px){
-
-  /* ── Contenedor principal ── */
+  /* ── CONTENEDOR ── */
   body{overflow:hidden}
   .pitch-wrap{padding:0;align-items:flex-start}
-  .pitch-container{
-    width:100%;height:var(--mvh,100vh);
-    grid-template-columns:1fr;border-radius:0;border:none;
-    display:flex;flex-direction:column
-  }
+  .pitch-container{width:100%;height:var(--mvh,100vh);grid-template-columns:1fr;border-radius:0;border:none;display:flex;flex-direction:column}
   .insight-panel{display:none}
-  .platform-wrap{
-    flex:1;height:calc(var(--mvh,100vh) - 60px);
-    overflow-y:auto;overflow-x:hidden;
-    -webkit-overflow-scrolling:touch;
-    position:relative
-  }
+  .platform-wrap{flex:1;height:calc(var(--mvh,100vh) - 63px);overflow:hidden;position:relative}
 
-  /* ── Nav ── */
-  .nav{height:60px;padding:0 16px}
+  /* ── NAV ── */
+  .nav{height:60px;padding:0 14px}
   .logo-sub{display:none}
-  /* Ocultar badge GIF y controles de slides */
-  .nav > div > div:first-child,
-  #prev-btn,#play-btn,#next-btn{display:none!important}
-  #gif-progress{display:none}
+  .nav > div > div:first-child{display:none}
 
-  /* ── Stage: flujo vertical normal ── */
+  /* ══════════════════════════════════════════════════════
+     MECANISMO FADE — reemplaza translateY en móvil.
+     Todas las views se apilan en position:absolute en el
+     mismo lugar. Solo la que tiene .view-active es visible.
+     Cero posibilidad de que se crucen datos entre views.
+  ══════════════════════════════════════════════════════ */
   .stage{
-    transform:none!important;
-    display:block;
-    height:auto!important
+    transform:none!important;   /* bloquea cualquier translateY del JS */
+    position:relative;
+    height:100%;
+    overflow:hidden;
   }
-
-  /* ── Views: cerradas por defecto, JS controla max-height ── */
   .view{
-    position:static!important;
-    width:100%!important;
-    height:auto!important;
-    min-height:unset!important;
+    position:absolute!important;
+    inset:0;
+    width:100%;
+    height:100%!important;
+    padding:20px 16px!important;
+    box-sizing:border-box;
+    overflow-y:auto;
+    overflow-x:hidden;
+    opacity:0!important;
+    pointer-events:none!important;
+    transition:none!important;       /* salida: instantánea */
+    animation:none!important;        /* sin conflictos de transform */
+  }
+  .view *{animation:none!important}  /* bloquea animaciones de entrada */
+  .view.view-active{
     opacity:1!important;
     pointer-events:auto!important;
-    animation:none!important;
-    max-height:0;
-    overflow:hidden;
-    padding:0 16px!important;
-    box-sizing:border-box;
-    transition:max-height .38s cubic-bezier(.4,0,.2,1),padding .3s ease
-  }
-  .view *{animation:none!important}
-
-  /* ── Headers del acordeón (inyectados por JS) ── */
-  .mob-acc-hd{
-    display:flex;align-items:center;gap:14px;
-    padding:16px 18px;
-    background:var(--bg3);
-    border:1px solid rgba(255,255,255,.06);
-    border-left:3px solid var(--mc,var(--s1));
-    cursor:pointer;
-    transition:background .2s,border-color .2s;
-    -webkit-tap-highlight-color:transparent;
-    user-select:none
-  }
-  .mob-acc-hd + .mob-acc-hd{margin-top:2px}
-  .mob-acc-hd.mob-open{
-    background:rgba(255,255,255,.04);
-    border-color:rgba(255,255,255,.1);
-    border-left-color:var(--mc,var(--s1))
-  }
-  .mob-acc-num{
-    font-family:'Bebas Neue';font-size:1.4rem;line-height:1;
-    color:var(--mc,var(--s1));flex-shrink:0;width:28px
-  }
-  .mob-acc-name{
-    flex:1;font-family:'DM Sans';font-weight:600;
-    font-size:.85rem;color:var(--muted);line-height:1.3
-  }
-  .mob-acc-hd.mob-open .mob-acc-name{color:var(--hero)}
-  .mob-acc-icon{
-    width:22px;height:22px;border-radius:50%;
-    border:1.5px solid rgba(255,255,255,.18);
-    display:flex;align-items:center;justify-content:center;
-    font-size:.85rem;color:var(--dim);flex-shrink:0;
-    font-family:'JetBrains Mono';
-    transition:transform .3s,border-color .3s,color .3s,background .3s
-  }
-  .mob-acc-hd.mob-open .mob-acc-icon{
-    transform:rotate(45deg);
-    border-color:var(--mc,var(--s1));
-    color:var(--mc,var(--s1));
-    background:rgba(0,195,255,.06)
+    transition:opacity .45s ease!important;  /* entrada: suave */
   }
 
-  /* ── View abierta ── */
-  .view.mob-open{
-    overflow:visible;
-    padding:16px 16px 28px!important
-  }
+  /* ── TIPOGRAFÍA ── */
+  h1{font-size:2.8rem}
+  h2{font-size:1.7rem;margin-bottom:12px}
 
-  /* ── Separador visual entre secciones ── */
-  .mob-acc-wrap{background:var(--bg);padding:8px 0 80px}
-
-  /* ── Tipografía ── */
-  h1{font-size:2.6rem}
-  h2{font-size:1.6rem;margin-bottom:10px}
-
-  /* ── Grids y componentes ── */
+  /* ── SESIONES (override inline style) ── */
   .session-grid{grid-template-columns:1fr!important}
   .s-card{padding:14px 16px!important}
   .s-info p{font-size:.68rem}
+
+  /* ── VALIDACIÓN ── */
   .val-grid-full{grid-template-columns:1fr}
   .val-card-full{padding:14px}
   .val-quote-full{padding:14px 16px;font-size:.76rem}
+
+  /* ── HERRAMIENTAS ── */
   .tool-grid{grid-template-columns:repeat(2,1fr)}
   .tool-card-v{padding:10px 12px}
   .signal-strip{font-size:.62rem;padding:7px 10px}
-  .view-1-badges{gap:6px;flex-wrap:wrap}
-  .view-1-badges span{font-size:.55rem;padding:5px 10px}
-  .executive-tracker{padding:20px 16px}
-  .tracker-row{gap:12px;margin-bottom:12px}
 
-  /* ── Instructor ── */
-  #view-5>div[style*="grid-template-columns"]{grid-template-columns:1fr!important;gap:12px!important;margin-top:10px!important}
-  .view-inst-name{font-size:2rem!important;line-height:1!important}
+  /* ── HERO BADGES ── */
+  .view-1-badges{gap:6px}
+  .view-1-badges span{font-size:.55rem;padding:5px 10px}
+
+  /* ── TRACKER ── */
+  .executive-tracker{padding:20px 16px}
+  .tracker-row{gap:14px;margin-bottom:14px}
+
+  /* ── HEADERS con subtitle lateral (ocultar label derecho) ── */
+  #view-1 > div:first-child > span,
+  #view-3 > div:first-child > span,
+  #view-4 > div:first-child > span{display:none}
+  #view-1 > div:first-child,
+  #view-3 > div:first-child,
+  #view-4 > div:first-child{flex-direction:column;gap:2px;align-items:flex-start}
+
+  /* ── INSTRUCTOR ── */
+  #view-5{padding:20px 16px!important}
+  #view-5 > div[style*="grid-template-columns"]{grid-template-columns:1fr!important;gap:12px!important;margin-top:10px!important}
+  .view-inst-name{font-size:1.9rem!important;line-height:1!important;margin-bottom:2px!important}
   .inst-edu-block{padding:10px 12px!important}
   .inst-edu-label,.inst-exp-label{font-size:.52rem!important;margin-bottom:5px!important}
   .inst-edu-item{font-size:.66rem!important;padding:3px 0!important}
   .inst-exp-items{gap:5px!important}
   .inst-exp-item{font-size:.66rem!important}
+  .inst-quote{display:none}
+  #view-5 a[href*="linkedin"]{display:none!important}
 
   /* ── CTA ── */
-  .view-5-cta{flex-direction:column;align-items:stretch;gap:10px}
+  #view-6 h1{font-size:2.4rem!important;margin-top:8px!important}
+  #view-6 .view-5-body{display:none}
+  #view-6 .view-5-sub{margin-top:6px!important;font-size:.58rem!important}
+  .view-5-cta{flex-direction:column;align-items:stretch;margin-top:20px!important;gap:10px!important}
   .view-5-cta a{text-align:center;justify-content:center}
-  .view-5-stats{flex-direction:column;gap:10px}
+  .view-5-stats{flex-direction:column;gap:10px;margin-top:18px!important}
 
-  /* Headers con subtitle lateral → ocultar label derecho ── */
-  #view-1>div:first-child>span,
-  #view-3>div:first-child>span,
-  #view-4>div:first-child>span{display:none}
-  #view-1>div:first-child,
-  #view-3>div:first-child,
-  #view-4>div:first-child{flex-direction:column;gap:2px;align-items:flex-start}
-
-  /* ── Login & modal ── */
+  /* ── LOGIN & MODAL ── */
   .login-box{width:calc(100vw - 32px);padding:36px 24px}
   .modal-box{padding:32px 20px}
   .modal-options{grid-template-columns:1fr}
   .hello-name{font-size:3.5rem}
   .hello-greeting{font-size:2.2rem}
-
-  /* ── Botón INSCRÍBETE flotante al fondo ── */
-  #mob-fab{
-    position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
-    z-index:200;display:flex;
-    background:linear-gradient(135deg,var(--accent),#1E40AF);
-    color:#fff;font-family:'Bebas Neue';font-size:1.1rem;letter-spacing:.08em;
-    padding:14px 32px;border-radius:100px;border:none;cursor:pointer;
-    box-shadow:0 8px 28px rgba(59,125,216,.45);
-    white-space:nowrap;text-decoration:none;align-items:center;gap:8px
-  }
 }
 </style>
 </head>
@@ -1221,13 +1165,12 @@ h2{font-family:'Bebas Neue';font-size:3rem;margin-bottom:30px;color:var(--hero)}
 </main></div>
 
 <script>
-// ── SAFARI iOS VIEWPORT FIX ──────────────────────────────────────────────
-// Safari 100vh ≠ window.innerHeight. --mvh = área visible real.
+// ── SAFARI iOS VIEWPORT FIX ───────────────────────────────────────────────
+// Safari's 100vh includes browser chrome → mismatches window.innerHeight.
+// --mvh is set to the real visible height so CSS view sizes match JS offsets.
 (function(){ document.documentElement.style.setProperty('--mvh', window.innerHeight + 'px'); })();
-window.addEventListener('resize', function(){
-    document.documentElement.style.setProperty('--mvh', window.innerHeight + 'px');
-});
-// ────────────────────────────────────────────────────────────────────────
+// ─────────────────────────────────────────────────────────────────────────
+
 // ══════════════════════════════════════════════════
 // CONFIGURACIÓN — REEMPLAZA ESTAS URLs CON TUS
 // WEB APP URLs DE GOOGLE APPS SCRIPT
@@ -1407,8 +1350,17 @@ modalSubmit.addEventListener('click', () => {
 
 // ── SLIDE SYSTEM ──
 const SLIDE_COUNT = 7;
-const SLIDE_H = 717;
+const SLIDE_H = 717; // desktop fixed height (px)
 const SLIDE_DURATION = 20000;
+
+// Returns the correct slide height for the current device
+function getSlideH() {
+    if (window.innerWidth <= 768) {
+        // nav=60px + gif-progress bar=3px = 63px of chrome on mobile
+        return window.innerHeight - 63;
+    }
+    return SLIDE_H;
+}
 
 let current = 0;
 let elapsed = 0;
@@ -1428,8 +1380,13 @@ function showSlide(n) {
     current = Math.max(0, Math.min(SLIDE_COUNT - 1, n));
     elapsed = 0;
 
-    // Move stage
-    stage.style.transform = `translateY(${-current * SLIDE_H}px)`;
+    // Desktop: translateY snap. Mobile: transform is CSS-blocked (none!important);
+    // view-active class controls opacity — no translateY, no data crossing.
+    if (window.innerWidth > 768) {
+        stage.style.transform = `translateY(${-current * getSlideH()}px)`;
+    } else {
+        stage.style.transform = 'none';
+    }
 
     // Swap sidebar insight
     allInsights.forEach((el, i) => {
@@ -1467,100 +1424,9 @@ function tick(ts) {
 }
 
 function initSlides() {
-    if (window.innerWidth <= 768) {
-        initMobileAccordion();
-        return; // no RAF, no auto-advance on mobile
-    }
     showSlide(0);
     lastTs = null;
     rafId = requestAnimationFrame(tick);
-}
-
-// ══════════════════════════════════════════════════
-// MOBILE ACCORDION SYSTEM
-// ══════════════════════════════════════════════════
-const ACCORDION_SECTIONS = [
-    { num:'01', name:'Transferencia de Capacidades', color:'var(--s1)' },
-    { num:'02', name:'Ciclo de Valor · 4 Sesiones',  color:'var(--s2)' },
-    { num:'03', name:'Capacidad Instalada',           color:'var(--s3)' },
-    { num:'04', name:'Ecosistema de IA',              color:'var(--s2)' },
-    { num:'05', name:'Validación Estratégica',        color:'var(--s4)' },
-    { num:'06', name:'Quién Dirige',                  color:'var(--s4)' },
-    { num:'07', name:'Inscríbete',                    color:'var(--s1)' },
-];
-
-function initMobileAccordion() {
-    isPaused = true; // stop auto-advance permanently on mobile
-
-    // Wrap stage content in a background container
-    stage.classList.add('mob-acc-wrap');
-
-    // Inject accordion headers before each view
-    allViews.forEach((view, i) => {
-        const meta = ACCORDION_SECTIONS[i];
-        const hd = document.createElement('div');
-        hd.className = 'mob-acc-hd';
-        hd.style.setProperty('--mc', meta.color);
-        hd.innerHTML =
-            '<span class="mob-acc-num">' + meta.num + '</span>' +
-            '<span class="mob-acc-name">' + meta.name + '</span>' +
-            '<span class="mob-acc-icon">+</span>';
-        stage.insertBefore(hd, view);
-
-        hd.addEventListener('click', function() {
-            const isOpen = hd.classList.contains('mob-open');
-            // Close all open sections
-            document.querySelectorAll('.mob-acc-hd.mob-open').forEach(function(openHd) {
-                openHd.classList.remove('mob-open');
-                var openView = openHd.nextElementSibling;
-                if (openView && openView.classList.contains('view')) {
-                    openView.style.maxHeight = '0';
-                    openView.style.paddingTop = '0';
-                    openView.style.paddingBottom = '0';
-                    openView.classList.remove('mob-open');
-                    // Re-enable overflow:hidden after transition
-                    openView.addEventListener('transitionend', function handler() {
-                        if (!openView.classList.contains('mob-open')) openView.style.overflow = 'hidden';
-                        openView.removeEventListener('transitionend', handler);
-                    });
-                }
-            });
-            // If was closed → open it
-            if (!isOpen) {
-                hd.classList.add('mob-open');
-                view.classList.add('mob-open');
-                view.style.overflow = 'hidden';
-                // Set padding first so scrollHeight includes it
-                view.style.paddingTop = '16px';
-                view.style.paddingBottom = '28px';
-                view.style.maxHeight = view.scrollHeight + 100 + 'px'; // +100 safety
-                // After transition, remove max-height cap so dynamic content isn't clipped
-                view.addEventListener('transitionend', function handler() {
-                    if (view.classList.contains('mob-open')) {
-                        view.style.maxHeight = 'none';
-                        view.style.overflow = 'visible';
-                    }
-                    view.removeEventListener('transitionend', handler);
-                });
-                // Smooth scroll header into view
-                setTimeout(function() {
-                    hd.scrollIntoView({ behavior:'smooth', block:'start' });
-                }, 60);
-            }
-        });
-    });
-
-    // Inject floating INSCRÍBETE button
-    var fab = document.createElement('a');
-    fab.id = 'mob-fab';
-    fab.href = '#';
-    fab.innerHTML = 'INSCRÍBETE →';
-    document.body.appendChild(fab);
-    fab.addEventListener('click', function(e) { e.preventDefault(); openModal(); });
-
-    // Open first section by default
-    var firstHd = stage.querySelector('.mob-acc-hd');
-    if (firstHd) firstHd.click();
 }
 
 playBtn.addEventListener('click', () => {
@@ -1571,6 +1437,29 @@ playBtn.addEventListener('click', () => {
 
 prevBtn.addEventListener('click', () => { showSlide(current - 1); });
 nextBtn.addEventListener('click', () => { showSlide(current + 1); });
+
+// ── TOUCH SWIPE (mobile) ──
+let _touchX = 0, _touchY = 0;
+stage.addEventListener('touchstart', e => {
+    _touchX = e.touches[0].clientX;
+    _touchY = e.touches[0].clientY;
+}, { passive: true });
+stage.addEventListener('touchend', e => {
+    const dx = _touchX - e.changedTouches[0].clientX;
+    const dy = _touchY - e.changedTouches[0].clientY;
+    // Only register as a vertical swipe if clearly more vertical than horizontal
+    if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 44) {
+        if (dy > 0) showSlide(current + 1); // swipe up → next
+        else        showSlide(current - 1); // swipe down → prev
+    }
+}, { passive: true });
+
+// ── RESIZE: recalculate on viewport change (orientation flip, browser chrome show/hide) ──
+window.addEventListener('resize', () => {
+    // Re-sync the --mvh variable (critical for Safari iOS address bar show/hide)
+    document.documentElement.style.setProperty('--mvh', window.innerHeight + 'px');
+    stage.style.transform = `translateY(${-current * getSlideH()}px)`;
+});
 
 // ── SESSION PANEL INTERACTIVITY ──
 function selectSess(idx) {
