@@ -1557,7 +1557,6 @@ function initMobileAccordion() {
             const isOpen = hd.classList.contains('mob-open');
             
             document.querySelectorAll('.mob-acc-hd.mob-open').forEach(function(openHd) {
-                if (openHd === hd) return;
                 openHd.classList.remove('mob-open');
                 var openView = openHd.nextElementSibling;
                 if (openView && openView.classList.contains('view')) {
